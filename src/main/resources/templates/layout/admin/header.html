@@ -1,0 +1,40 @@
+<header xmlns:th="http://www.thymeleaf.org" th:fragment="headerAdmin">
+    <div class="row title">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 style="padding: 20px 0">Delight Shop</h2>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="menu col-lg-6" style="margin-bottom: 15px">
+            <nav class="navbar bg-white navbar-expand-lg" data-bs-theme="info">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 24px">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/user/list-user}">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/san-pham/list-san-pham}">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/loai-sp/list-loai-sp}">Loại sản phẩm</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-4">
+            <div class="user_option-box">
+                <span th:text="${session.adminLogged.ten}" style="font-size: 25px"></span>
+                <span>
+                    <a th:href="@{/login}">
+                        <img th:src="@{/icon/logout.png}" alt="">
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body style="padding: 0 25px">
+<header th:replace="layout/admin/header :: headerAdmin"></header>
+    <h3 style="text-align: center; padding-bottom: 15px">Danh sách loại sản phẩm</h3>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Ngày tạo</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lsp : ${dsLoaiSP}">
+            <td th:text="${lsp.ma}"></td>
+            <td th:text="${lsp.ten}"></td>
+            <td th:text="${lsp.ngayTao}"></td>
+            <td>
+                <a th:href="@{'/loai-sp/detail-loai-sp/' + ${lsp.id}}">
+                    <button class="btn btn-primary">Detail</button>
+                </a>
+                <a th:href="@{'/loai-sp/delete-loai-sp/' + ${lsp.id}}">
+                    <button class="btn btn-danger">Remove</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{'/loai-sp/add-loai-sp'}">
+        <button class="btn btn-success">Add</button>
+    </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
+</body>
+</html>
