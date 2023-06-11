@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -31,6 +32,14 @@ public class HoaDon implements Serializable {
     private Users users;
     private String ma;
     private String trangThai;
-    private LocalDateTime ngayTao;
-    private LocalDateTime ngayThanhToan;
+    private Date ngayTao;
+    private Date ngayThanhToan;
+
+    public HoaDon(Users users, String ma, String trangThai, Date ngayTao, Date ngayThanhToan) {
+        this.users = users;
+        this.ma = ma;
+        this.trangThai = trangThai;
+        this.ngayTao = ngayTao;
+        this.ngayThanhToan = ngayThanhToan;
+    }
 }

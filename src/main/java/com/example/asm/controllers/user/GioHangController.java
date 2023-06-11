@@ -39,7 +39,7 @@ public class GioHangController {
         for (GioHangChiTiet ghct : list) {
             soLuong += Integer.parseInt(String.valueOf(ghct.getSoLuong()));
 //            System.out.println(ghct.getId().getGioHang().getId());
-            price += soLuong * ghct.getId().getSanPham().getGiaBan();
+            price += ghct.getSoLuong() * ghct.getId().getSanPham().getGiaBan();
         }
 
         session.removeAttribute("soLuong");

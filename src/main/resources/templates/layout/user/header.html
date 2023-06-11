@@ -1,11 +1,13 @@
 <header xmlns:th="http://www.thymeleaf.org" th:fragment="headerCustommer">
-    <div class="row title">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <h2 style="padding: 20px 0">Delight Shop</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2 style="padding: 20px 0; text-align: center">Delight Shop</h2>
+            </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
-    </div>
+
     <div class="row title">
         <div class="col-md-2"></div>
         <div class="col-md-6">
@@ -20,15 +22,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" th:href="@{/product/listSP}">Sản phẩm</a>
                                 </li>
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link active" href="">Giới thiệu</a>-->
-<!--                                </li>-->
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link active" href="">Tin tức</a>-->
-<!--                                </li>-->
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link active" href="">Liên hệ</a>-->
-<!--                                </li>-->
                             </ul>
                         </div>
                     </div>
@@ -37,8 +30,11 @@
         </div>
         <div class="col-md-4">
             <div class="user_option-box">
-                <span th:text="${session.userLogged.ten}"></span>
-                <button type="button" class="btn btn-light position-relative">
+                <a th:href="@{/hoa-don/danh-sach-da-mua}">
+                    <img th:src="@{/icon/user-24.png}" alt="">
+                    <span th:text="${session.userLogged.ten}"></span>
+                </a>
+                <button type="button" class="btn btn-light position-relative" style="margin: 0 20px">
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                           th:text="${session.soLuong}">
                     </span>
@@ -52,5 +48,5 @@
             </div>
         </div>
     </div>
-
+    </div>
 </header>
