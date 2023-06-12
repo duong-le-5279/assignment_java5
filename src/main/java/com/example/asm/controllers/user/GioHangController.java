@@ -59,18 +59,19 @@ public class GioHangController {
         GioHang gioHang = gioHangRepository.findByUsers(users);
         SanPham sanPham = sanPhamRepository.findById(id).get();
         GioHangChiTiet gh = gioHangChiTietRepository.findByIdSanPhamAndIdGioHang(sanPham, gioHang);
+
         if (gh != null) {
             gh.setSoLuong(gh.getSoLuong() + 1);
             gioHangChiTietRepository.save(gh);
-            return "redirect:/product/list";
+            return "redirect:/gio-hang/hien-thi";
         }
-
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         GioHangChiTietId gioHangChiTietId = new GioHangChiTietId(gioHang, sanPham);
         gioHangChiTiet.setId(gioHangChiTietId);
         gioHangChiTiet.setSoLuong(1);
         gioHangChiTietRepository.save(gioHangChiTiet);
-        return "redirect:/product/list";
+
+        return "redirect:/gio-hang/hien-thi";
     }
 
     @GetMapping("/delete")
@@ -108,7 +109,7 @@ public class GioHangController {
     }
 
     @GetMapping("/tang")
-    public String tangSoLuong(
+    public String tangSoLuong(Model model,
             @RequestParam(name = "idSP") String idSP,
             @RequestParam(name = "idGioHang") String idGH
     ) {
@@ -116,11 +117,19 @@ public class GioHangController {
         sanPham.setId(idSP);
         GioHang gioHang = new GioHang();
         gioHang.setId(idGH);
+        SanPham sp = sanPhamRepository.findById(idSP).get();
         GioHangChiTietId gioHangChiTietId = new GioHangChiTietId(gioHang, sanPham);
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(gioHangChiTietId).get();
-        gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + 1);
-        gioHangChiTietRepository.save(gioHangChiTiet);
-        System.out.println(gioHangChiTiet.getSoLuong());
+        String message = "";
+//        boolean check = checkSP(gioHangChiTiet.getSoLuong(), sp.getSoLuong(), message);
+        if(gioHangChiTiet.getSoLuong() == sp.getSoLuong()){
+            message = "Số lượng hàng trong giỏ hàng của bạn không thể lớn hơn số lượng hàng trong kho";
+            model.addAttribute("message", message);
+        }else {
+            gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + 1);
+            gioHangChiTietRepository.save(gioHangChiTiet);
+        }
         return "redirect:/gio-hang/hien-thi";
     }
+
 }

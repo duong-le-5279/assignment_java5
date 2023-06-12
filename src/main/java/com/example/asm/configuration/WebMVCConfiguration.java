@@ -1,6 +1,5 @@
 package com.example.asm.configuration;
 
-import com.example.asm.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -20,15 +19,4 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
         source.setDefaultEncoding(StandardCharsets.UTF_8.name());
         return source;
     }
-//
-//    @Autowired
-//    private LoginInterceptor loginInterceptor;
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry){
-//        registry.addInterceptor(loginInterceptor)
-//                .addPathPatterns("/admin/**")
-//                .excludePathPatterns("/login");
-//    }
-
 }

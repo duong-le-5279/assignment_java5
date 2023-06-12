@@ -34,6 +34,7 @@
             <td th:text="${cartdetail.id.sanPham.giaBan}"></td>
             <td th:text="${cartdetail.soLuong}"></td>
             <td th:text="${cartdetail.soLuong * cartdetail.id.sanPham.giaBan}"></td>
+            <td th:if="${cartdetail.soLuong > cartdetail.id.sanPham.soLuong}" th:text="${messsage}" style="width: 160px" class="text-danger"></td>
         </tr>
         <tr style="border-bottom: white solid">
             <td colspan="4" class="total">Tổng tiền:</td>

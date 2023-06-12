@@ -32,11 +32,11 @@
         </thead>
         <tbody>
         <tr th:each="orderdetail : ${listSP}">
-            <td> <img th:src="@{'/img/' + ${orderdetail.hoaDonChiTietId.sanPham.image}}" style="width: 30px; height: auto"></td>
+            <td> <img th:src="@{'/img/' + ${orderdetail.hoaDonChiTietId.sanPham.image}}" style="width: 50px; height: auto"></td>
             <td th:text="${orderdetail.hoaDonChiTietId.sanPham.ten}"></td>
             <td th:text="${orderdetail.hoaDonChiTietId.sanPham.giaBan}"></td>
             <td th:text="${orderdetail.soLuong}"></td>
-        </tr>
+            </tr>
         <tr style="border-bottom: white solid">
             <td colspan="3" class="total">Tổng tiền:</td>
             <td class="total" th:text="${tongGia} + ' vnđ'"></td>

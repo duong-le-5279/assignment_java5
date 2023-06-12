@@ -34,6 +34,7 @@
 <header th:replace="layout/user/header :: headerCustommer"></header>
 
 <section class="container">
+<!--    <div th:if="${message != ''}" th:text="${message}" class="alert alert-danger"></div>-->
     <h1 style="font-size: 40px; text-align: center; margin-bottom: 20px">Giỏ hàng</h1>
     <div class="row">
         <div class="col-ms-8 col-md-8 col-xs-12">
@@ -62,8 +63,8 @@
                                 <input class="minus is-form" type="button" value="-"/>
                             </button>
                         </a>
-                        <span class="input-qty" type="text" th:value="${cartdetail.soLuong}"
-                               style="width: 30px; text-align: center"/>
+                        <input class="input-qty" type="text" th:value="${cartdetail.soLuong}"
+                               style="width: 30px; text-align: center; pointer-events: none;"/>
                         <a th:href="@{/gio-hang/tang(idSP=${cartdetail.id.sanPham.id},idGioHang=${cartdetail.id.gioHang.id})}">
                             <button type="button" class="btn">
                                 <input class="minus is-form" type="button" value="+"/>

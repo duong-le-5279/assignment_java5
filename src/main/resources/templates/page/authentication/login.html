@@ -15,7 +15,7 @@
                     Login
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/login}" th:object="${user}" method="post">
+                    <form th:action="@{/home}" th:object="${user}" method="post">
                         <div class="mb-3">
                             <label>Tai khoan</label>
                             <input type="text" name="username" class="form-control" th:value="${userError}">

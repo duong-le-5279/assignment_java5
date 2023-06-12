@@ -27,7 +27,7 @@ public class LoginController {
         return "/page/authentication/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/home")
     public String checkLogin(Model model,
                              @Valid
                              @ModelAttribute("user") Users users,
@@ -39,7 +39,7 @@ public class LoginController {
         }
         Users userFromDB = usersRepository.findUserByUsernameAndPassword(users.getUsername(), users.getPassword());
         if(userFromDB != null){
-//            session.setAttribute("userLogged", userFromDB);
+//            session.setAttribute("", userFromDB);
             if(userFromDB.isRole()){
                 session.setAttribute("userLogged", userFromDB);
                 return "redirect:/product/list";

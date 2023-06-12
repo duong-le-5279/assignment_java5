@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,15 +37,22 @@ public class HoaDonController {
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @GetMapping("/show")
     public String orderPage(Model model,
                             HttpSession session) {
         Users users = (Users) session.getAttribute("userLogged");
-//        GioHang gioHang = gioHangRepository.findByUsers(users);
-        List<GioHangChiTiet> list = gioHangChiTietRepository.findAll();
+        GioHang gioHang = gioHangRepository.findByUsers(users);
+        List<GioHangChiTiet> list = gioHangChiTietRepository.findByIdGioHang(gioHang);
+        if(list.size() == 0){
+            return "redirect:/gio-hang/hien-thi";
+        }
         Long price = Long.valueOf(0);
         for (GioHangChiTiet ghct : list) {
             price += ghct.getSoLuong() * ghct.getId().getSanPham().getGiaBan();
+            model.addAttribute("messsage", "số lượng sản phẩm trong kho k đủ");
         }
         model.addAttribute("list", list);
         model.addAttribute("tongGia", price);
@@ -57,26 +65,29 @@ public class HoaDonController {
         Users users = (Users) session.getAttribute("userLogged");
         GioHang gh = gioHangRepository.findByUsers(users);
         List<GioHangChiTiet> list = gioHangChiTietRepository.findAll();
-//        Long soLuong = Long.valueOf("0");
-//        for (GioHangChiTiet ghct : list) {
-//            soLuong -= ghct.getSoLuong();
-//        }
-//        session.removeAttribute("soLuong");
-//        session.setAttribute("soLuong", soLuong);
-        //gioHangChiTietRepository.deleteAll(list);
-        gioHangChiTietRepository.deleteByIdGioHang(gh);
-        session.setAttribute("soLuong", 0);
         String ma = RandomStringUtils.randomAlphabetic(8);
         Date date = new Date();
         String trangThai = "chờ";
-
-        HoaDon hoaDon = new HoaDon(users, ma, trangThai, date, date);
+        Long tongGia = Long.valueOf("0");
+        for (GioHangChiTiet ghct : list) {
+            tongGia += ghct.getSoLuong() * ghct.getId().getSanPham().getGiaBan();
+            if(ghct.getSoLuong() > ghct.getId().getSanPham().getSoLuong()){
+                return "redirect:/hoa-don/show";
+            }
+        }
+        session.setAttribute("soLuong", 0);
+        gioHangChiTietRepository.deleteByIdGioHang(gh);
+        HoaDon hoaDon = new HoaDon(users, ma, trangThai, date, date, tongGia);
         HoaDonChiTiet hoaDonChiTiet;
         hoaDonRepository.save(hoaDon);
         for (GioHangChiTiet ghct : list) {
             HoaDonChiTietId hoaDonChiTietId = new HoaDonChiTietId(hoaDon, ghct.getId().getSanPham());
             Long price = ghct.getSoLuong() * ghct.getId().getSanPham().getGiaBan();
             hoaDonChiTiet = new HoaDonChiTiet(hoaDonChiTietId, ghct.getSoLuong(), price);
+
+            SanPham sp = ghct.getId().getSanPham();
+            sp.setSoLuong(sp.getSoLuong() - ghct.getSoLuong());
+            sanPhamRepository.save(sp);
             hoaDonChiTietRepository.save(hoaDonChiTiet);
         }
 
@@ -89,16 +100,12 @@ public class HoaDonController {
         Users users = (Users) session.getAttribute("userLogged");
 
         List<HoaDon> listHoaDon = hoaDonRepository.getOrderByUserId(users.getId());
-        Long tongGia = Long.valueOf("0");
+        List<HoaDonChiTiet> listHdct = new ArrayList<>();
         for (HoaDon hd : listHoaDon) {
-            List<HoaDonChiTiet> listHdct = hoaDonChiTietRepository.findByIdHoaDon(hd);
-            for (HoaDonChiTiet hdct : listHdct) {
-                tongGia += hdct.getGia();
-            }
+           listHdct = hoaDonChiTietRepository.findByIdHoaDon(hd);
         }
 
         model.addAttribute("dsHoaDon", listHoaDon);
-        model.addAttribute("tongGia", tongGia);
         return "/page/user/danh-sach-hoa-don";
     }
 

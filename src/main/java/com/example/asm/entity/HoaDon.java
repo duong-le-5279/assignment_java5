@@ -34,12 +34,13 @@ public class HoaDon implements Serializable {
     private String trangThai;
     private Date ngayTao;
     private Date ngayThanhToan;
-
-    public HoaDon(Users users, String ma, String trangThai, Date ngayTao, Date ngayThanhToan) {
+    private Long tongGia;
+    public HoaDon(Users users, String ma, String trangThai, Date ngayTao, Date ngayThanhToan, Long tongGia) {
         this.users = users;
         this.ma = ma;
         this.trangThai = trangThai;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
+        this.tongGia = tongGia;
     }
 }
